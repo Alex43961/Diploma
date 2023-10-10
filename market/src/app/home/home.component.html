@@ -1,0 +1,87 @@
+<header
+  style="background-color: #47484a; text-align: center; display:flex; justify-content: center; align-items: center; color: #fff;">
+  <div style="display: flex; width: 100%; justify-content: space-between;">
+    <div style="display: flex;">
+      <p style="margin: 10px;">Shops</p>
+      <p style="margin: 10px;">Delivery</p>
+      <p style="margin: 10px;">For business</p>
+    </div>
+    <div style="display: flex;">
+      <p style="margin: 10px;">Blog "M.Tech"</p>
+      <p style="margin: 10px;">M.Tech</p>
+      <p style="margin: 10px;">8-800-600-7775</p>
+    </div>
+  </div>
+</header>
+
+<div class="navigation navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="d-flex align-items-center" style="margin-right: 50px;">
+      <h1><a class="navbar-brand" href="#">M.Tech</a></h1>
+      <img src="/assets/logo.png" alt="M.Tech Logo" class="logo" style="height: 80px;">
+      <input style="margin: 10px; width: 470px;" type="search" class="form-control ml-auto" [(ngModel)]="filter"
+        placeholder="Search for goods...">
+    </div>
+    <div class="cart ml-2">
+      <button class="btn btn-danger ml-2" (click)="goToAdminPage()" style="background-color: transparent;">
+        <i class="fas fa-user"></i> Admin
+        <img style="height: 30px;" src="/assets/admin.png" alt="">
+      </button>
+      <button class="btn btn-danger ml-2" (click)="goToCart()" style="background-color: transparent;">
+        <i class="fas fa-shopping-cart">Cart</i>
+        <span class="cartCounter">{{ getCartItemCount() }}</span>
+        <img style="height: 30px;" src="/assets/cart.png" alt="">
+      </button>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px;" class="container">
+  <div class="row">
+    <div class="col" *ngFor="let product of this.showedProducts">
+      <div class="card mb-3 h-100" (click)="goItem(product)" style="max-width: 300px;">
+        <img class="card-img-top" [src]="product.image" alt="Something went wrong" width="150">
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">{{product.description}} </p>
+        </div>
+        <div class="card-footer">{{product.price}}$</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pagination" style="margin: 30px;">
+  <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">
+    Previous page
+  </button>
+  <span>{{ currentPage }}</span>
+  <button (click)="currentPage = currentPage + 1" [disabled]="currentPage >= filteredProducts.length/elementsOnThePage">
+    Next page
+  </button>
+</div>
+
+<footer style="background-color: #47484a;" class="navbar navbar-expand-lg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="text-light">Contact Information:</p>
+        <ul class="list-unstyled">
+          <li><a href="tel:+18006007775" class="text-light">8-800-600-7775</a></li>
+          <li><a href="mailto:info@example.com" class="text-light">info@example.com</a></li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <p class="text-light">Subscribe to our newsletter:</p>
+        <form>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Your Email...">
+            <p class="like_a_btn">send</p>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr class="bg-light">
+    <p class="text-light text-center">&copy; 2023 M.Tech. All rights reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,17 @@
+.like_a_btn {
+    text-align: center;
+    color: #fff;
+    height: 25px;
+    width: 50px;
+    background-color: #867c7c;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 200px;
+    margin-top: -30px;
+    margin-right: -20px;
+}
+  
+footer {
+    margin-top: 40px;
+}
+  

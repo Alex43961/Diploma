@@ -1,0 +1,51 @@
+<button id="exit" (click)="goBack()" class="btn btn-primary">Back</button>
+    <div class="admin-page">
+      <h2 class="admin-heading">Страница админа</h2>
+      <div *ngIf="!isLoggedIn" class="login-form">
+        <label id="textPassword" for="password">Пароль:</label>
+        <input type="password" id="password" [(ngModel)]="password">
+        <div *ngIf="passwordInvalid" class="error-message">Неверный пароль</div>
+        <button id="signUp" (click)="checkPassword()" class="btn btn-success btn-block mt-3">Войти</button>
+      </div> 
+  
+  <div *ngIf="isLoggedIn" class="admin-actions">
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="product-form" novalidate>
+      <div class="form-group">
+        <label for="productName">Название товара</label>
+        <input type="text" id="productName" name="productName" formControlName="productName" required pattern="[A-zА-я ]+" class="form-control">        
+      </div>
+      <div class="form-group">
+        <label for="productDescription">Описание товара</label>
+        <input type="text" id="productDescription" formControlName="productDescription" required pattern='[A-Za-zА-Яа-я0-9 ]+' class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="productImage">URL картинки</label>
+        <input type="url" id="productImage" formControlName="productImage" required (blur)="checkImage()" class="form-control">
+        <div *ngIf="imageLoadingFailed" class="error-message">Картинка не загружена.</div>
+      </div>
+      <div class="form-group">
+        <label for="productPrice">Цена</label>
+        <input type="number" id="productPrice" formControlName="productPrice" required pattern="[0-9]+" class="form-control">
+      </div>
+      <button type="submit" [disabled]="productForm.invalid" class="btn btn-success btn-block mt-3">Добавить</button>
+    </form>
+    <div class="product-list mt-4">
+      <h3 class="product-list-heading">Список товаров</h3>
+      <ul class="list-group">
+        <li *ngFor="let product of productList; let i = index" class="list-group-item d-flex align-items-center justify-content-between">
+          <img [src]="product.image" alt="{{ product.name }}" width="50">
+          {{ product.name }}
+          <button (click)="showModalWindow(i)" class="btn btn-danger">Удалить</button>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isModalWindow" class="modal-window mt-4">
+      <div class="modal-header"></div>
+      <span class="modal-body">Вы уверены, что хотите удалить этот товар?</span>
+      <div class="modal-footer">
+        <button (click)="hideModalWindow()" id="btn-modal-close">Нет</button>
+        <button (click)="deleteProduct()" id="btn-modal-delete">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
