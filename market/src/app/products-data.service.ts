@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Products } from './products';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -111,10 +112,33 @@ export class ProductsDataService {
 
   constructor(private http: HttpClient) { }
 
-  getProductsList(): Observable<any> {
-    //return this.productsList;
-    // now returns an Observable of Config
-    return this.http.get<any>('http://localhost:3000/products');
+  // getProductsList(): Observable<any> {
+  //   //return this.productsList;
+  //   // now returns an Observable of Config
+  //   return this.http.get<any>('http://localhost:3000/products');
+  // }
+
+  private productsSubject = new Subject<any[]>();
+
+  
+
+  getProductsList(): Observable<any[]> {
+    // Вместо эмитирования данных из Subject, делаем HTTP-запрос
+    this.http.get<any[]>('http://localhost:3000/products')
+      .subscribe({
+        next: data => {
+          this.productsSubject.next(data);
+        },
+        error: e => {
+          console.error(Error);
+        }
+      });
+
+    return this.productsSubject.asObservable();
+  }
+
+  updateProductsList(newData: any[]) {
+    this.productsSubject.next(newData);
   }
 }
 

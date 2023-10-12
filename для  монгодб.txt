@@ -1,3 +1,0 @@
-graph ql для Mongodb
-
-reight immiter

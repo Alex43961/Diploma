@@ -1,0 +1,32 @@
+[
+    {
+        "userName": "Henry",
+        "userSurName": "Li",
+        "userLastName": "Jonson",
+        "phone": "+0380661436688",
+        "password": "123",
+        "cart": [
+            {
+                "image": "",
+                "name": "",
+                "price": 0,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "userName": "Bobby",
+        "userSurName": "Alan",
+        "userLastName": "Parker",
+        "phone": "+0380666546798",
+        "password": "123",
+        "cart": [
+            {
+                "image": "",
+                "name": "",
+                "price": 0,
+                "quantity": 1
+            }
+        ]
+    }
+]

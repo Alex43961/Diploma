@@ -3,6 +3,9 @@ import { ProductsDataService } from '../products-data.service';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
 import { CartService } from '../cart.service';
+import { HttpClient } from '@angular/common/http';
+import { Products } from '../products';
+
 
 @Component({
   selector: 'app-home',
@@ -18,6 +21,7 @@ export class HomeComponent {
   products: any[] = [];
   filteredProducts: any[] = [];
 
+
   constructor(
     private productsDataService: ProductsDataService,
     public itemService: ItemService,
@@ -26,15 +30,21 @@ export class HomeComponent {
 
   ngOnInit(): void {
     let productStorage: any[] = [];
-    this.productsDataService.getProductsList().subscribe(data => {
-      console.log('data', data)
-      this.products = data;
-      let storedData = localStorage.getItem('productList');
-      if (storedData) {
-        productStorage = JSON.parse(storedData);
+    this.productsDataService.getProductsList().subscribe({
+      next: data => {
+        console.log('data', data)
+        this.products = data;
+        // let storedData = localStorage.getItem('productList');
+        // if (storedData) {
+        //   productStorage = JSON.parse(storedData);
+        // }
+        // this.products.push(...productStorage);
+      },
+      error: e => {
+        console.log('errorL', Error)
       }
-      this.products.push(...productStorage);
-    }, error => { console.log('errorL', error) });
+    });
+
   }
 
   goItem(product: any) {

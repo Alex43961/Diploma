@@ -1,21 +1,24 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require("mongoose");
-const productSchema = require("./models/product");
-let Product = {}
+
 
 
 
 const app = express();
 const PORT = 3000;
-
+const productSchema = require("./models/product");
+const usersSchema = require("./models/users");
+let Product = {};
+let Users = {};
 
 
 const connection = async () => {
     try {
         await mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log('Connected to MongoDB');
-        Product = await mongoose.model("Product", productSchema)
+        Product = await mongoose.model("Product", productSchema);
+        Users = await mongoose.model("Users",usersSchema,);
     } catch (err) {
         console.log(`DB connection error: ${err}`);
     }
@@ -35,6 +38,21 @@ app.use((_, res, next) => {
   res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
   res.header('Access-Control-Allow-Method', "*");
   next();
+});
+
+app.get('/users', (req, res) => {
+    console.log('/users');
+    console.log('Users:', Users)
+    Users
+        .find()
+        .then((users) => {
+            console.log(':users: ', users)
+            res
+                .status(200)
+                .json(users);
+
+        })
+        .catch(() => handleError(res, "Something goes wrong..."));
 });
 
 
