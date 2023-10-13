@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class ProductsDataService {
 
-  productStorage: any[] = [];
+  // productStorage: any[] = [];
 
   // private productsList: Products[] = [
 
@@ -118,27 +118,64 @@ export class ProductsDataService {
   //   return this.http.get<any>('http://localhost:3000/products');
   // }
 
-  private productsSubject = new Subject<any[]>();
+  // private productsSubject = new Subject<any[]>();
 
   
 
-  getProductsList(): Observable<any[]> {
-    // Вместо эмитирования данных из Subject, делаем HTTP-запрос
-    this.http.get<any[]>('http://localhost:3000/products')
-      .subscribe({
-        next: data => {
-          this.productsSubject.next(data);
-        },
-        error: e => {
-          console.error(Error);
-        }
-      });
+  // getProductsList(): Observable<any[]> {
+  //   // Вместо эмитирования данных из Subject, делаем HTTP-запрос
+  //   this.http.get<any[]>('http://localhost:3000/products')
+  //     .subscribe({
+  //       next: data => {
+  //         this.productsSubject.next(data);
+  //       },
+  //       error: e => {
+  //         console.error(Error);
+  //       }
+  //     });
 
-    return this.productsSubject.asObservable();
+  //   return this.productsSubject.asObservable();
+  // }
+
+  PORT = 'http://localhost:3000';
+
+  // updateProductsList(newData: any[]) {
+  //   this.productsSubject.next(newData);
+  // }
+
+
+   getProductsList(): Observable<any> {
+    return this.http.get<any>(`${this.PORT}/products`);
   }
 
-  updateProductsList(newData: any[]) {
-    this.productsSubject.next(newData);
+  getProduct(productId: string): Observable<any> {
+    return this.http.get<any>(`${this.PORT}/products/${productId}`);
+  }
+
+  addProduct(product: any): Observable<any> {
+    return this.http.post<any>(`${this.PORT}/products`, product);
+  }
+
+  // Метод для удаления товара
+  deleteProduct(productId: string): Observable<any> {
+    return this.http.delete<any>(`${this.PORT}/products/${productId}`);
+  }
+
+
+  // Метод для обновления товара
+  updateProduct(updatedProduct: any): Observable<any> {
+    return this.http.put<any>(`${this.PORT}/products/${updatedProduct._id}`, updatedProduct);
+  }
+
+  // метод для сохранения комментария
+  saveComment(productId: string, comment: string): Observable<any> {
+    const body = { comment }; // Создаем объект с комментарием
+    return this.http.post<any>(`${this.PORT}/products/${productId}/add-comment`, body);
+  }
+
+   // метод для получения комментариев по ID товара
+    getComments(productId: string): Observable<string[]> {
+      return this.http.get<string[]>(`${this.PORT}/products/${productId}`);
   }
 }
 

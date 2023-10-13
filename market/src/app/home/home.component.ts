@@ -47,12 +47,12 @@ export class HomeComponent {
 
   }
 
-  goItem(product: any) {
-    this.itemService.setProduct(product);
+  // goItem(productId: string) {
 
-    this.router.navigate(['product']);
+  //   this.productsDataService.getProduct(productId);
+  //   this.router.navigate(['product']);
 
-  }
+  // }
 
   get startIndex(): number {
     return (this.currentPage - 1) * this.elementsOnThePage;

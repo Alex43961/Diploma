@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProductsDataService } from '../products-data.service';
+import { Products } from '../products';
 
 @Component({
   selector: 'app-admin-page',
@@ -10,7 +12,7 @@ import { Router } from '@angular/router';
 
 export class AdminPageComponent {
   productForm: FormGroup;
-  productList: { image: string, name: string, price: number, description: string }[] = [];
+  productList: any[] = [];
   imageLoadingFailed: boolean = false;
   productStorage: any[] = [];
   isLoggedIn: boolean = false;
@@ -20,6 +22,7 @@ export class AdminPageComponent {
   selectIndex: number = -1;
 
   constructor(
+    private productsDataService: ProductsDataService,
     private fb: FormBuilder,
     public router: Router) {
     this.productForm = this.fb.group({
@@ -40,22 +43,44 @@ export class AdminPageComponent {
 
 
   ngOnInit() {
-    const storedProducts = localStorage.getItem('productList');
-    this.productList = storedProducts ? JSON.parse(storedProducts) : [];
+    // const storedProducts = localStorage.getItem('productList');
+    // this.productList = storedProducts ? JSON.parse(storedProducts) : [];
+    this.productsDataService.getProductsList().subscribe(
+      (products: Products[]) => {
+        this.productStorage = products;
+      },
+      (error) => {
+        console.error('Ошибка при загрузке товаров', error);
+      }
+    );
   }
 
   addProduct() {
     if (this.productForm.valid) {
-      this.productList.push({
+      const addedProduct: Products = {
         image: this.productForm.value.productImage,
         name: this.productForm.value.productName,
         price: +this.productForm.value.productPrice,
         description: this.productForm.value.productDescription
-      });
+      };
 
-      this.productStorage.push(...this.productList);
-      localStorage.setItem('productList', JSON.stringify(this.productStorage));
-      this.productForm.reset();
+      // this.productStorage.push(...this.productList);
+      // localStorage.setItem('productList', JSON.stringify(this.productStorage));
+      // this.productForm.reset();
+      this.productsDataService.addProduct(addedProduct).subscribe(
+        () => {
+          this.ngOnInit(); // Обновить список товаров после успешного добавления
+          this.productForm.reset(); // Сбросить форму
+          // Очистите поля формы
+          // this.productName = '';
+          // this.productPrice;
+          // this.productImageUrl = '';
+          // this.productDescription = '';
+        },
+        (error) => {
+          console.error('Ошибка при добавлении товара', error);
+        }
+      );
     }
   }
 
@@ -79,10 +104,24 @@ export class AdminPageComponent {
     this.isModalWindow = false;
   }
 
-  deleteProduct() {
-    this.productList.splice(this.selectIndex, 1);
-    localStorage.setItem('productList', JSON.stringify(this.productList));
+  deleteProduct():void {
+   const x =  this.productStorage.splice(this.selectIndex, 1);
+    const index = x[0]._id;
+
+    console.log("_id",index );
+    console.log("removingItem",x);
+    console.log("this.productStorage", this.productStorage);
+    
+    if (index) {
+      this.productsDataService.deleteProduct(index).subscribe(() => {
+        this.productStorage = this.productStorage.filter(p => p._id !== index);
+
+      });
+    }
+    // this.productList.splice(this.selectIndex, 1);
+    // localStorage.setItem('productList', JSON.stringify(this.productList));
     this.hideModalWindow();
+
   }
 
   goBack() {

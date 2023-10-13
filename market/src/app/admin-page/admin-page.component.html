@@ -32,7 +32,7 @@
     <div class="product-list mt-4">
       <h3 class="product-list-heading">Список товаров</h3>
       <ul class="list-group">
-        <li *ngFor="let product of productList; let i = index" class="list-group-item d-flex align-items-center justify-content-between">
+        <li *ngFor="let product of productStorage; let i = index" class="list-group-item d-flex align-items-center justify-content-between">
           <img [src]="product.image" alt="{{ product.name }}" width="50">
           {{ product.name }}
           <button (click)="showModalWindow(i)" class="btn btn-danger">Удалить</button>
