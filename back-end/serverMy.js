@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = 3000;
 const productSchema = require("./models/product");
-const usersSchema = require("./models/users");
+const usersSchema = require("./models/user");
 let Product = {};
 let Users = {};
 

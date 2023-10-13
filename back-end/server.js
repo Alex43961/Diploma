@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const productRoutes = require('./routes/products-routes');
+const userRoutes = require('./routes/users-routes.js')
 const cors = require('cors');
 
 const PORT = 3000;
@@ -28,4 +29,7 @@ app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`listening port ${PORT}`);
 });
 
-app.use(productRoutes);
+app.use(
+    productRoutes,
+    userRoutes
+    );
