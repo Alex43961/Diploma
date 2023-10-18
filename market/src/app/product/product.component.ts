@@ -20,7 +20,7 @@ export class ProductComponent {
   myComments: any[] = [];
   newCommentText: string = '';
   // savedComments = this.commentsService.getItem('commentsList');
-  isSavedComments:boolean = false;
+  isSavedComments: boolean = false;
 
   constructor(
     private productsDataService: ProductsDataService,
@@ -40,7 +40,7 @@ export class ProductComponent {
     // this.product = items[items.length - 1];
     // this.loadComments();
 
-this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params => {
       const productId = params.get('id');
       if (productId !== null) {
         const parsedProductId = productId;
@@ -48,12 +48,12 @@ this.route.paramMap.subscribe(params => {
           this.product = product;
           console.log(this.product);
           // if (this.product && !this.isSavedComments) {
-            // Загрузите комментарии при загрузке страницы
-             this.loadComments();
-            this.isSavedComments = true;
+          // Загрузите комментарии при загрузке страницы
+          this.loadComments();
+          this.isSavedComments = true;
           // }
         });
-      }      
+      }
     });
 
     // this.route.data.subscribe(data => {
@@ -73,10 +73,9 @@ this.route.paramMap.subscribe(params => {
     //     console.log('Найден объект:', foundObject);
     //   }
     // }    
-     if (this.product && this.product._id) {
+    if (this.product && this.product._id) {
       this.productsDataService.getComments(this.product._id).subscribe((comments: string[]) => {
         this.myComments = comments;
-        console.log('Загруженные комментарии из базы данных:', this.myComments);
       });
     }
     this.isSavedComments = true;
@@ -105,7 +104,7 @@ this.route.paramMap.subscribe(params => {
     // }
     // this.commentsService.setItem('commentsList', this.myComments);
     if (this.newCommentText.trim() !== '') {
-      
+
       if (this.product) {
         if (!this.product.comments) {
           this.product.comments = [];
@@ -118,12 +117,12 @@ this.route.paramMap.subscribe(params => {
         // Отправить комментарий на сервер для сохранения
         this.productsDataService.updateProduct(this.product).subscribe(() => {
 
-          console.log('Комментарии внутри this.product после добавления:', this.product.comments);
+          console.log('Комментарии добавлен:', this.product.comments);
         });
       }
       this.newCommentText = '';
-    this.loadComments();
+      this.loadComments();
     }
-    
+
   }
 }

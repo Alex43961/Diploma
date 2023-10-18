@@ -156,24 +156,24 @@ export class ProductsDataService {
     return this.http.post<any>(`${this.PORT}/products`, product);
   }
 
-  // Метод для удаления товара
+ 
   deleteProduct(productId: string): Observable<any> {
     return this.http.delete<any>(`${this.PORT}/products/${productId}`);
   }
 
 
-  // Метод для обновления товара
+ 
   updateProduct(updatedProduct: any): Observable<any> {
     return this.http.put<any>(`${this.PORT}/products/${updatedProduct._id}`, updatedProduct);
   }
 
-  // метод для сохранения комментария
+  
   saveComment(productId: string, comment: string): Observable<any> {
-    const body = { comment }; // Создаем объект с комментарием
+    const body = { comment }; 
     return this.http.post<any>(`${this.PORT}/products/${productId}/add-comment`, body);
   }
 
-   // метод для получения комментариев по ID товара
+   
     getComments(productId: string): Observable<string[]> {
       return this.http.get<string[]>(`${this.PORT}/products/${productId}`);
   }

@@ -21,6 +21,7 @@ router.post('/users', addUser);
 router.put('/users/:id', updateUser);
 
 router.get('/users/:id', getCart);
+router.get('/users/:id', getWishItems);
 
 
 module.exports = router;

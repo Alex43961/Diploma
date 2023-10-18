@@ -5,34 +5,28 @@ const usersSchema = new Schema({
     userName:
     {
         type: String
-           
+
     },
-    userSurName:
+    email:
     {
-        type: String
-           
+        type: String,
+        require: true
     },
-    userLastName:
-    {
-        type: String
-         
-    },
-    phone:
-    {
-        type: String
-       
-    },        
     password:
     {
-        type: String
-       
-       
+        type: String,
+        require: true
     },
     cart:
     {
         type: [String]
 
-    }
-},{ timestamps: true });
+    },
+    wishItems:
+    {
+        type: [String]
+    },
+
+}, { timestamps: true });
 const User = mongoose.model('User', usersSchema);
 module.exports = User;

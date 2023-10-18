@@ -10,6 +10,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Comment } from './comments';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { Comment } from './comments';
     HomeComponent,
     ProductComponent,
     CartComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@ const handleError = (res, error) => {
 const getUsers = (req, res) => {
     User
         .find()
-        .sort({ name: 1 })
+        // .sort({ name: 1 })
         .then((users) => {
             res
                 .status(200)
@@ -68,7 +68,18 @@ const getCart = (req, res) => {
             console.error(err);
             return res.status(500).json({ error: 'Could not retrieve user comments' });
         }
-        res.json(user.comments);
+        res.json(user.cart);
+    });
+};
+
+const getWishItems = (req, res) => {
+    const userId = req.params.id;
+    User.findById(userId, (err, user) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Could not retrieve user comments' });
+        }
+        res.json(user.wishItems);
     });
 };
 
@@ -81,5 +92,6 @@ module.exports = {
     addUser,
     updateUser,
     getCart,
-    deleteUser
+    getWishItems
+   
 };

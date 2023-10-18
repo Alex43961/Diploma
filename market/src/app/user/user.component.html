@@ -1,0 +1,15 @@
+<div class="form-wrapper"  >
+  <h2>Регистрация</h2>
+  <form (ngSubmit)="register()" class="userForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" required [(ngModel)]="registerData.email" name="email">
+    
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" required [(ngModel)]="registerData.password" name="password">
+    
+    <label for="confirmPassword">Повторите пароль:</label>
+    <input type="password" id="confirmPassword" required [(ngModel)]="registerData.confirmPassword" name="confirmPassword">
+    
+    <button type="submit" class="btn btn-success btn-block mt-3">Зарегистрироваться</button>
+  </form>
+</div>

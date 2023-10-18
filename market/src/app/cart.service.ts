@@ -52,4 +52,7 @@ export class CartService {
   updateStorage(key: string, value: any): void {
     localStorage.setItem(key, JSON.stringify(value));
   }
+
+
+ 
 }

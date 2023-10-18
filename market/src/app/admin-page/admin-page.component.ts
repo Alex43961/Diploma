@@ -46,7 +46,7 @@ export class AdminPageComponent {
     // const storedProducts = localStorage.getItem('productList');
     // this.productList = storedProducts ? JSON.parse(storedProducts) : [];
     this.productsDataService.getProductsList().subscribe(
-      (products: Products[]) => {
+     (products: Products[]) => {
         this.productStorage = products;
       },
       (error) => {
@@ -108,9 +108,7 @@ export class AdminPageComponent {
    const x =  this.productStorage.splice(this.selectIndex, 1);
     const index = x[0]._id;
 
-    console.log("_id",index );
-    console.log("removingItem",x);
-    console.log("this.productStorage", this.productStorage);
+    
     
     if (index) {
       this.productsDataService.deleteProduct(index).subscribe(() => {

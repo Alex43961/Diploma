@@ -78,6 +78,10 @@ export class HomeComponent {
     this.router.navigate(['cart']);
   }
 
+  goToUser() {
+    this.router.navigate(['user']);
+  }
+
   getCartItemCount(): number {
     return this.cartService.getItemsCount();
   }
