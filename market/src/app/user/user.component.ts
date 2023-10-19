@@ -43,7 +43,8 @@ export class UserComponent {
 this.userService.addUser(newUser).subscribe(
         () => {
           this.ngOnInit(); // Обновить список товаров после успешного добавления
-          console.log("newUser",newUser)
+          console.log("newUser",newUser);
+          this.goHomePage();
         },
         (error) => {
           console.error('Ошибка при добавлении товара', error);

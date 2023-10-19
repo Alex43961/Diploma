@@ -7,6 +7,7 @@ const {
   addUser,
   updateUser,
 	getCart,
+  getWishItems
     // addCart,
     // updateCart,
     // deleteCart

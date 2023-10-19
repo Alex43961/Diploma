@@ -7,7 +7,7 @@ const handleError = (res, error) => {
 const getProducts = (req, res) => {
   Product
   .find()
-  .sort({ name: 1 })
+  // .sort({ name: 1 })
   .then((products) => {
     res
       .status(200)

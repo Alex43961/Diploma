@@ -15,9 +15,9 @@ export class UserService {
     return this.http.get<any>(`${this.PORT}/users`);
   }
 
-  // getProduct(productId: string): Observable<any> {
-  //   return this.http.get<any>(`${this.PORT}/products/${productId}`);
-  // }
+  getUser(userEmail: string): Observable<any> {
+    return this.http.get<any>(`${this.PORT}/users/${userEmail}`);
+  }
 
   addUser(user: any): Observable<any> {
     console.log("serv user",user)

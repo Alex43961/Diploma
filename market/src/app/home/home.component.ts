@@ -86,4 +86,8 @@ export class HomeComponent {
     return this.cartService.getItemsCount();
   }
 
+  goToLogIn(){
+    this.router.navigate(['logIn']);
+  }
+
 }

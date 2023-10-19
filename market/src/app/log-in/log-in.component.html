@@ -1,18 +1,18 @@
 <div class="form-wrapper"  >
-  <h2>Регистрация</h2>
-  <form (ngSubmit)="register()" class="userForm">
+  <h2>Вход в аккаунт</h2>
+  <form (ngSubmit)="logIn()" class="userForm">
     <label for="email">Email:</label>
     <input type="email" id="email" required [(ngModel)]="registerData.email" name="email">
     
     <label for="password">Пароль:</label>
     <input type="password" id="password" required [(ngModel)]="registerData.password" name="password">
-    
-    <label for="confirmPassword">Повторите пароль:</label>
-    <input type="password" id="confirmPassword" required [(ngModel)]="registerData.confirmPassword" name="confirmPassword">
-    
+    <div *ngIf="error" class="error-message">{{ error }}</div>
     <div class="button-wrapper">
         <button class="cancel" (click)="goHomePage()" class="btn btn-danger btn-block mt-3" style="height: 30px; width: 70px;">Отмена</button>
-        <button type="submit" class="btn btn-primary btn-block mt-3" style="height: 30px; width: 100px;">Регистрация</button>
+        <button type="submit" class="btn btn-primary btn-block mt-3" style="height: 30px; width: 100px;">Войти</button>
     </div>
+    
+    
   </form>
 </div>
+

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Comment } from './comments';
 import { UserComponent } from './user/user.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { UserComponent } from './user/user.component';
     ProductComponent,
     CartComponent,
     AdminPageComponent,
-    UserComponent
+    UserComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,
