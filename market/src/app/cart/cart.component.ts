@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { Router } from '@angular/router';
 import { Products } from '../products';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,29 +13,43 @@ export class CartComponent {
   cartItems: any[] = [];
   selectedCurrency: string = '$';
   totalPrice: number = 0;
+  currentUser:any;
 
   constructor
     (private cartService: CartService,
-      public router: Router) {
-    this.cartItems = this.cartService.getItems("cartList");
+      public router: Router,
+      private userService:UserService) {
+     
+     this.currentUser  = userService.getCurrentUser();
   }
 
   ngOnInit() {
+    if(this.currentUser){
+      this.cartItems = this.cartService.getItems();
+    }
     this.cartService.getTotalPrice(this.cartItems);
   }
 
   removeItem(item: any): void {
-    const index = this.cartItems.indexOf(item);
+    const index = this.currentUser.cart.indexOf(item);
     if (index !== -1) {
       this.cartItems.splice(index, 1);
     }
-    this.cartService.updateStorage("cartList", this.cartItems);
+    // this.cartService.updateStorage("cartList", this.cartItems);
+    this.userService.updateUser(this.currentUser).subscribe(() => {
+
+          console.log('Продукт'+`${item.name}`+"удален", this.currentUser.cart);
+        });
   }
 
   increaseQuantity(item: any): void {
     item.quantity++;
     item.totalPrice = item.quantity * item.price;
-    this.cartService.updateStorage("cartList", this.cartItems);
+    // this.cartService.updateStorage("cartList", this.cartItems);
+     this.userService.updateUser(this.currentUser).subscribe(() => {
+
+          console.log('Количество добавлено:', this.currentUser.cart);
+        });
   }
 
   decreaseQuantity(item: any): void {
@@ -42,7 +57,11 @@ export class CartComponent {
       item.quantity--;
       item.totalPrice = item.quantity * item.price;
     }
-    this.cartService.updateStorage("cartList", this.cartItems);
+    // this.cartService.updateStorage("cartList", this.cartItems);
+    this.userService.updateUser(this.currentUser).subscribe(() => {
+
+          console.log('Количество убавлено:', this.currentUser.cart);
+        });
   }
 
 
@@ -56,8 +75,13 @@ export class CartComponent {
   }
 
   checkout(): void {
-    this.cartService.clearCart();
-    this.cartItems = [];
+    this.currentUser.cart = [];
+    this.userService.updateUser(this.currentUser).subscribe(() => {
+
+          console.log('Корзина очищена', this.currentUser.cart);
+        });
+    // this.cartService.clearCart();
+     this.cartItems = [];
   }
 
   getCartItemCount(): number {

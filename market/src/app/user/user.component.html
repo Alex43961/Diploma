@@ -2,17 +2,27 @@
   <h2>Регистрация</h2>
   <form (ngSubmit)="register()" class="userForm">
     <label for="email">Email:</label>
-    <input type="email" id="email" required [(ngModel)]="registerData.email" name="email">
+    <input type="email" id="email" required [(ngModel)]="registerData.email" #email="ngModel" name="email" pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'>
+    <div [hidden]="email.valid ||email.untouched" class="error-message"> Неверный email</div>
     
     <label for="password">Пароль:</label>
-    <input type="password" id="password" required [(ngModel)]="registerData.password" name="password">
+    <input type="password" id="password" required [(ngModel)]="registerData.password" #password="ngModel" name="password" pattern='[0-9]{3,}'>
+    <div [hidden]="password.valid || password.untouched" class="error-message">Пароль должен содержать от 3-х до 9-ти цифр</div>
     
     <label for="confirmPassword">Повторите пароль:</label>
     <input type="password" id="confirmPassword" required [(ngModel)]="registerData.confirmPassword" name="confirmPassword">
     
     <div class="button-wrapper">
         <button class="cancel" (click)="goHomePage()" class="btn btn-danger btn-block mt-3" style="height: 30px; width: 70px;">Отмена</button>
-        <button type="submit" class="btn btn-primary btn-block mt-3" style="height: 30px; width: 100px;">Регистрация</button>
+        <button type="submit" [disabled]="email.invalid || password.invalid" class="btn btn-primary btn-block mt-3" style="height: 30px; width: 100px;">Регистрация</button>
     </div>
   </form>
+   <div *ngIf="isModalWindow" class="modal-window mt-4">
+      <div class="modal-header"></div>
+      <span class="modal-body">Пользователь с таким email уже зарегистрирован</span>
+      <div class="modal-footer">
+        <button (click)="hideModalWindow()" id="btn-modal-close">Ok</button>
+        
+      </div>
+    </div>
 </div>

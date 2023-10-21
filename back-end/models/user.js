@@ -17,15 +17,14 @@ const usersSchema = new Schema({
         type: String,
         require: true
     },
-    cart:
-    {
-        type: [String]
+    cart: {
+        type: []
+    },
 
+    wishItems: {
+        type: []
     },
-    wishItems:
-    {
-        type: [String]
-    },
+
 
 }, { timestamps: true });
 const User = mongoose.model('User', usersSchema);

@@ -21,6 +21,9 @@ const productSchema = new Schema({
     },
     comments: {
         type: [String]
+    },
+    quantity: {
+        type:Number
     }
 }, { timestamps: true });
 const Product = mongoose.model('Product', productSchema);

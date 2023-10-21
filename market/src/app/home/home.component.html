@@ -45,7 +45,7 @@
 <div style="margin-top: 24px;" class="container">
   <div class="row">
     <div class="col" *ngFor="let product of this.showedProducts">
-      <a [routerLink]="['/product', product._id]" style="text-decoration: none;">
+      <a [routerLink]="['/product', product._id]" (click)="getProductId(product)" style="text-decoration: none;">
       <div class="card mb-3 h-100" style="max-width: 300px;">
         <img class="card-img-top" [src]="product.image" alt="Something went wrong" width="150">
         <div class="card-body">

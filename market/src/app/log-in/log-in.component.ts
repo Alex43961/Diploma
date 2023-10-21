@@ -14,6 +14,7 @@ export class LogInComponent {
   usersList: User[] = [];
   error: string = '';
   currentUser:any;
+  isError:boolean = false;
 
 
 
@@ -40,11 +41,14 @@ export class LogInComponent {
     if (user && user.password === this.registerData.password) {
       console.log('Авторизация успешна') 
       this.currentUser = user;
+       this.userService.setCurrentUser(user);
       console.log("this.currentUser",this.currentUser);
+      this.goHomePage();
       // Действия, которые нужно выполнить при успешной авторизации
     } else {
       // Создаем новый класс для сообщения об ошибке
-      this.error = 'Неверный email или пароль';
+      this.error = '**Неверный email или пароль';
+      this.isError = true;
     }
   }
 

@@ -61,8 +61,10 @@ export class AdminPageComponent {
         image: this.productForm.value.productImage,
         name: this.productForm.value.productName,
         price: +this.productForm.value.productPrice,
-        description: this.productForm.value.productDescription
+        description: this.productForm.value.productDescription,
+        quantity:1
       };
+      
 
       // this.productStorage.push(...this.productList);
       // localStorage.setItem('productList', JSON.stringify(this.productStorage));

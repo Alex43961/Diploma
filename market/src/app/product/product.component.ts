@@ -6,6 +6,7 @@ import { ProductsDataService } from '../products-data.service';
 import { CartService } from '../cart.service';
 import { CommentsService } from '../comments.service';
 import { Comment } from '../comments';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-product',
@@ -15,6 +16,13 @@ import { Comment } from '../comments';
 
 export class ProductComponent {
   product: any = {};
+  user: any = {};
+  productToCart: any = {
+    image: this.product.image,
+    name: this.product.name,
+    price: this.product.price,
+    quantity: this.product.quantity
+  }
   // commentsList: any = { name: '', comments: [] };
 
   myComments: any[] = [];
@@ -28,7 +36,8 @@ export class ProductComponent {
     private cartService: CartService,
     public router: Router,
     private route: ActivatedRoute,
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private userService: UserService
   ) { }
 
   goBack() {
@@ -55,7 +64,8 @@ export class ProductComponent {
         });
       }
     });
-
+    this.user = this.userService.getCurrentUser();
+    console.log("this.user", this.user)
     // this.route.data.subscribe(data => {
     //   this.selectedCurrencySymbol = data['currency'];
     // });
@@ -81,9 +91,9 @@ export class ProductComponent {
     this.isSavedComments = true;
   }
 
-  addToCart(item: any): void {
+  addToCart(item): void {
     this.cartService.addToCart(item);
-
+    console.log("item", item)
   }
 
   addComment(newComment: string): void {

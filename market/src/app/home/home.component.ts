@@ -89,5 +89,8 @@ export class HomeComponent {
   goToLogIn(){
     this.router.navigate(['logIn']);
   }
-
+ 
+ getProductId(productId:string){
+  
+ }
 }

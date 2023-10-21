@@ -25,3 +25,8 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}

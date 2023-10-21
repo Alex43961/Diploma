@@ -7,7 +7,7 @@ const handleError = (res, error) => {
 const getUsers = (req, res) => {
     User
         .find()
-        // .sort({ name: 1 })
+        .sort({ name: 1 })
         .then((users) => {
             res
                 .status(200)
