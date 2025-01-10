@@ -26,4 +26,5 @@ app.listen(3000, () => {
   console.log('Сервер запущен на порту 3000');
 });
 
-// const PORT = 3000;
+// it's for me
+
