@@ -1,9 +1,9 @@
-require("dotenv").config();
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
 const productRoutes = require('./routes/products-routes');
-const userRoutes = require('./routes/users-routes.js')
+const userRoutes = require('./routes/users-routes.js');
 const cors = require('cors');
 
 const PORT = 3000;
@@ -13,9 +13,12 @@ const app = express();
 app.use(express.json());
 
 app.use((_, res, next) => {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Method', "*");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Method', '*');
   next();
 });
 app.use(cors());
@@ -29,7 +32,4 @@ app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`listening port ${PORT}`);
 });
 
-app.use(
-    productRoutes,
-    userRoutes
-    );
+app.use(productRoutes, userRoutes);
