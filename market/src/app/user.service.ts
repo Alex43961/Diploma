@@ -11,7 +11,7 @@ export class UserService {
   private currentUser: any;
   private currentProduct:any;
   // PORT = 'http://localhost:3000';
-  PORT = environment.apiUrl;
+  private readonly API_URL = environment.apiUrl;
 
 
 
@@ -36,16 +36,16 @@ export class UserService {
   constructor(private http: HttpClient) { }
   // !-------------------------------------------
   getUsersList(): Observable<any> {
-    return this.http.get<any>(`${this.PORT}/users`);
+    return this.http.get<any>(`${this.API_URL}/users`);
   }
 
   getUser(userEmail: string): Observable<any> {
-    return this.http.get<any>(`${this.PORT}/users/${userEmail}`);
+    return this.http.get<any>(`${this.API_URL}/users/${userEmail}`);
   }
 
   addUser(user: any): Observable<any> {
     console.log("serv user", user)
-    return this.http.post<any>(`${this.PORT}/users`, user);
+    return this.http.post<any>(`${this.API_URL}/users`, user);
   }
 
 
@@ -56,13 +56,13 @@ export class UserService {
 
 
   updateUser(updatedUser: any): Observable<any> {
-    return this.http.put<any>(`${this.PORT}/users/${updatedUser._id}`, updatedUser);
+    return this.http.put<any>(`${this.API_URL}/users/${updatedUser._id}`, updatedUser);
   }
 
 
   saveCart(userId: string, cart: string): Observable<any> {
      const body = { cart }; 
-    return this.http.post<any>(`${this.PORT}/products/${userId}/add-cart`, body);
+    return this.http.post<any>(`${this.API_URL}/products/${userId}/add-cart`, body);
    }
 
 
