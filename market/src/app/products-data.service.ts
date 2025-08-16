@@ -3,6 +3,7 @@ import { Products } from './products';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -137,7 +138,8 @@ export class ProductsDataService {
   //   return this.productsSubject.asObservable();
   // }
 
-  PORT = 'http://localhost:3000';
+  // PORT = 'http://localhost:3000';
+  private readonly API_URL = environment.apiUrl;
 
   // updateProductsList(newData: any[]) {
   //   this.productsSubject.next(newData);
@@ -145,37 +147,37 @@ export class ProductsDataService {
 
 
    getProductsList(): Observable<any> {
-    return this.http.get<any>(`${this.PORT}/products`);
+    return this.http.get<any>(`${this.API_URL}/products`);
   }
 
   getProduct(productId: string): Observable<any> {
-    return this.http.get<any>(`${this.PORT}/products/${productId}`);
+    return this.http.get<any>(`${this.API_URL}/products/${productId}`);
   }
 
   addProduct(product: any): Observable<any> {
-    return this.http.post<any>(`${this.PORT}/products`, product);
+    return this.http.post<any>(`${this.API_URL}/products`, product);
   }
 
  
   deleteProduct(productId: string): Observable<any> {
-    return this.http.delete<any>(`${this.PORT}/products/${productId}`);
+    return this.http.delete<any>(`${this.API_URL}/products/${productId}`);
   }
 
 
  
   updateProduct(updatedProduct: any): Observable<any> {
-    return this.http.put<any>(`${this.PORT}/products/${updatedProduct._id}`, updatedProduct);
+    return this.http.put<any>(`${this.API_URL}/products/${updatedProduct._id}`, updatedProduct);
   }
 
   
   saveComment(productId: string, comment: string): Observable<any> {
     const body = { comment }; 
-    return this.http.post<any>(`${this.PORT}/products/${productId}/add-comment`, body);
+    return this.http.post<any>(`${this.API_URL}/products/${productId}/add-comment`, body);
   }
 
    
     getComments(productId: string): Observable<string[]> {
-      return this.http.get<string[]>(`${this.PORT}/products/${productId}`);
+      return this.http.get<string[]>(`${this.API_URL}/products/${productId}`);
   }
 }
 
