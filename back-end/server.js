@@ -6,7 +6,7 @@ const productRoutes = require('./routes/products-routes');
 const userRoutes = require('./routes/users-routes.js');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 3000;
+const PORT = "https://diploma-wj1h.onrender.com/" 
 const URL = process.env.DB_CONNECTION;
 
 const app = express();
