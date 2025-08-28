@@ -1,9 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+/* CSS переменные для шрифтов */
+:root {
+  --font-family-primary: "Roboto", sans-serif;
+  --font-family-secondary: "Arial", sans-serif;
+  --font-family-mono: "Courier New", monospace;
+  --font-size-small: 12px;
+  --font-size-normal: 14px;
+  --font-size-large: 16px;
+  --font-size-xlarge: 18px;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-} 
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Глобальные настройки шрифта */
+* {
+  font-family: var(--font-family-primary);
+}
+
+/* Альтернативные шрифты для разных элементов */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+code,
+pre {
+  font-family: var(--font-family-mono);
+}
