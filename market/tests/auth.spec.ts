@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { setupApiMocks, expectApiCall, mockUsers } from './utils/api-mocks';
 
 test.describe('Authentication Tests', () => {
   test.beforeEach(async ({ page }) => {
+    // Настраиваем моки API перед каждым тестом
+    await setupApiMocks(page);
     await page.goto('/');
   });
 
@@ -80,5 +83,59 @@ test.describe('Authentication Tests', () => {
     await expect(page.locator('input[type="password"]')).toHaveValue(
       'password123'
     );
+  });
+
+  test('should make API call when loading login page', async ({ page }) => {
+    // Ожидаем API вызов при загрузке страницы входа
+    const apiCallPromise = expectApiCall(page, '/users', 'GET');
+    
+    await page.goto('/logIn');
+    
+    // Проверяем, что API вызов был сделан
+    const request = await apiCallPromise;
+    expect(request.url()).toContain('/users');
+    expect(request.method()).toBe('GET');
+  });
+
+  test('should make API call during login process', async ({ page }) => {
+    await page.goto('/logIn');
+
+    // Ожидаем API вызов при отправке формы
+    const apiCallPromise = expectApiCall(page, '/users', 'POST');
+    
+    // Заполняем форму валидными данными
+    await page.fill('input[type="email"]', mockUsers[0].email);
+    await page.fill('input[type="password"]', mockUsers[0].password);
+    await page.click('button[type="submit"]');
+    
+    // Проверяем, что API вызов был сделан
+    const request = await apiCallPromise;
+    expect(request.url()).toContain('/users');
+    expect(request.method()).toBe('POST');
+    
+    // Проверяем, что данные были отправлены корректно
+    const postData = JSON.parse(request.postData() || '{}');
+    expect(postData.email).toBe(mockUsers[0].email);
+    expect(postData.password).toBe(mockUsers[0].password);
+  });
+
+  test('should handle API errors gracefully', async ({ page }) => {
+    // Переопределяем мок для симуляции ошибки API
+    await page.route('**/users', async (route) => {
+      await route.fulfill({
+        status: 500,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Internal Server Error' })
+      });
+    });
+
+    await page.goto('/logIn');
+    
+    // Проверяем, что приложение не падает при ошибке API
+    await expect(page.locator('body')).toBeVisible();
+    
+    // Проверяем, что форма все еще доступна
+    await expect(page.locator('input[type="email"]')).toBeVisible();
+    await expect(page.locator('input[type="password"]')).toBeVisible();
   });
 });
