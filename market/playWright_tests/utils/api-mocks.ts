@@ -7,15 +7,15 @@ export const mockUsers = [
     email: 'test@example.com',
     password: 'password123',
     name: 'Test User',
-    cart: [],
+    cart: []
   },
   {
-    _id: '2',
+    _id: '2', 
     email: 'admin@example.com',
     password: 'admin123',
     name: 'Admin User',
-    cart: [],
-  },
+    cart: []
+  }
 ];
 
 export const mockProducts = [
@@ -24,15 +24,15 @@ export const mockProducts = [
     name: 'Apple iPhone 15 Pro Max 256GB Black Titanium',
     price: 999.99,
     description: 'Айфон (iPhone) - это линейка смартфонов...',
-    image: 'https://example.com/iphone.jpg',
+    image: 'https://example.com/iphone.jpg'
   },
   {
     _id: '2',
     name: 'Apple MacBook Air 15" M2 256GB',
     price: 499.99,
     description: 'Макбук (MacBook) - это линейка ноутбуков...',
-    image: 'https://example.com/macbook.jpg',
-  },
+    image: 'https://example.com/macbook.jpg'
+  }
 ];
 
 // Функция для настройки моков API
@@ -42,7 +42,7 @@ export async function setupApiMocks(page: Page) {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify(mockUsers),
+      body: JSON.stringify(mockUsers)
     });
   });
 
@@ -51,7 +51,7 @@ export async function setupApiMocks(page: Page) {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify(mockProducts),
+      body: JSON.stringify(mockProducts)
     });
   });
 
@@ -59,19 +59,19 @@ export async function setupApiMocks(page: Page) {
   await page.route('**/products/*', async (route) => {
     const url = route.request().url();
     const productId = url.split('/').pop();
-    const product = mockProducts.find((p) => p._id === productId);
-
+    const product = mockProducts.find(p => p._id === productId);
+    
     if (product) {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
-        body: JSON.stringify(product),
+        body: JSON.stringify(product)
       });
     } else {
       await route.fulfill({
         status: 404,
         contentType: 'application/json',
-        body: JSON.stringify({ error: 'Product not found' }),
+        body: JSON.stringify({ error: 'Product not found' })
       });
     }
   });
@@ -80,19 +80,19 @@ export async function setupApiMocks(page: Page) {
   await page.route('**/users', async (route) => {
     if (route.request().method() === 'POST') {
       const postData = JSON.parse(route.request().postData() || '{}');
-      const user = mockUsers.find((u) => u.email === postData.email);
-
+      const user = mockUsers.find(u => u.email === postData.email);
+      
       if (user && user.password === postData.password) {
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
-          body: JSON.stringify({ success: true, user }),
+          body: JSON.stringify({ success: true, user })
         });
       } else {
         await route.fulfill({
           status: 401,
           contentType: 'application/json',
-          body: JSON.stringify({ error: 'Invalid credentials' }),
+          body: JSON.stringify({ error: 'Invalid credentials' })
         });
       }
     } else {
@@ -100,20 +100,16 @@ export async function setupApiMocks(page: Page) {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
-        body: JSON.stringify(mockUsers),
+        body: JSON.stringify(mockUsers)
       });
     }
   });
 }
 
 // Функция для проверки API вызовов
-export async function expectApiCall(
-  page: Page,
-  url: string,
-  method: string = 'GET'
-) {
-  const requestPromise = page.waitForRequest(
-    (request) => request.url().includes(url) && request.method() === method
+export async function expectApiCall(page: Page, url: string, method: string = 'GET') {
+  const requestPromise = page.waitForRequest(request => 
+    request.url().includes(url) && request.method() === method
   );
   return requestPromise;
 }

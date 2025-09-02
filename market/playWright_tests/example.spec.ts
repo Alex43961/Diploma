@@ -13,7 +13,7 @@ test('should display M.Tech logo and navigation', async ({ page }) => {
   // Check for M.Tech logo and navigation elements
   await expect(page.locator('h1:has-text("M.Tech")')).toBeVisible();
   await expect(page.locator('img[src="/assets/logo.png"]')).toBeVisible();
-
+  
   // Check for navigation buttons
   await expect(page.locator('button:has-text("Register")')).toBeVisible();
   await expect(page.locator('button:has-text("Log in")')).toBeVisible();

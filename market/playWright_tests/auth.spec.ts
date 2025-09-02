@@ -88,9 +88,9 @@ test.describe('Authentication Tests', () => {
   test('should make API call when loading login page', async ({ page }) => {
     // Ожидаем API вызов при загрузке страницы входа
     const apiCallPromise = expectApiCall(page, '/users', 'GET');
-
+    
     await page.goto('/logIn');
-
+    
     // Проверяем, что API вызов был сделан
     const request = await apiCallPromise;
     expect(request.url()).toContain('/users');
@@ -102,17 +102,17 @@ test.describe('Authentication Tests', () => {
 
     // Ожидаем API вызов при отправке формы
     const apiCallPromise = expectApiCall(page, '/users', 'POST');
-
+    
     // Заполняем форму валидными данными
     await page.fill('input[type="email"]', mockUsers[0].email);
     await page.fill('input[type="password"]', mockUsers[0].password);
     await page.click('button[type="submit"]');
-
+    
     // Проверяем, что API вызов был сделан
     const request = await apiCallPromise;
     expect(request.url()).toContain('/users');
     expect(request.method()).toBe('POST');
-
+    
     // Проверяем, что данные были отправлены корректно
     const postData = JSON.parse(request.postData() || '{}');
     expect(postData.email).toBe(mockUsers[0].email);
@@ -125,15 +125,15 @@ test.describe('Authentication Tests', () => {
       await route.fulfill({
         status: 500,
         contentType: 'application/json',
-        body: JSON.stringify({ error: 'Internal Server Error' }),
+        body: JSON.stringify({ error: 'Internal Server Error' })
       });
     });
 
     await page.goto('/logIn');
-
+    
     // Проверяем, что приложение не падает при ошибке API
     await expect(page.locator('body')).toBeVisible();
-
+    
     // Проверяем, что форма все еще доступна
     await expect(page.locator('input[type="email"]')).toBeVisible();
     await expect(page.locator('input[type="password"]')).toBeVisible();

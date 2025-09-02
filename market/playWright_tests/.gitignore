@@ -1,0 +1,22 @@
+# Playwright test artifacts
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Screenshots and videos
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.webm
+
+# Trace files
+*.zip
+
+# Test data files (if they contain sensitive information)
+# test-data-sensitive.ts
+
+# Temporary files
+*.tmp
+*.temp
